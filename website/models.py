@@ -10,6 +10,8 @@ class User(db.Model, UserMixin):
     movies = db.relationship('Movies') #user movies 
 
 
+
+
 class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
@@ -17,3 +19,4 @@ class Movies(db.Model):
     main_actor = db.Column(db.String(100))
     ratings = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))   #relates movies they've seen to their user id one to many relationship
+

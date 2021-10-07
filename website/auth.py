@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash #this 
 from . import db       #import the database
 from flask_login import login_user, login_required, logout_user, current_user   #we can use these imports to access information about current user etc
 
+
 #redirect will allow us to make the website more dynamic can redirect them to homepage
 #flash is for error handling will flash a message to user
 #request can retrieve information sent in the form
@@ -20,7 +21,7 @@ def login():
         if user:  
             if check_password_hash(user.password, password):  #if hashes are the same we will log in successfully
                 flash('Logged in successfully!', category='success')
-                login_user(user, remember=True) #logs in the user, and remembers that the user is logged in the session
+                login_user(user, remember=True) #logs in the user, and remembers that the user is logged in the session   login_user(user, remember = True) for final version
                 return redirect(url_for('views.profile'))
             else:
                 flash('Incorrect password buddy, try again :(', category='error') 
@@ -59,9 +60,9 @@ def sign_up():
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'))   #define the user
             db.session.add(new_user)   #add the user 
             db.session.commit() #creates the new user in the database
-            login_user(user, remember=True) #logged in when account created
+            login_user(new_user, remember=True) #logged in when account created
             flash('Account created! enjoy our movie reccomendations', category='success')
-            return redirect(url_for('views.home'))  #blueprint name for less errors if homepage changes
+            return redirect(url_for('views.profile'))  #blueprint name for less errors if homepage changes
 
     return render_template("sign_up.html", user=current_user)
 
